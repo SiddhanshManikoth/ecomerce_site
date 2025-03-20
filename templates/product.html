@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEG-PLAZA | Product Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="../static/assets/css/product.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2E7D32;
+            --accent-color: #8BC34A;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+        }
+
+        .brand-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin: 1rem 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-image-container {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image:hover {
+            transform: scale(1.03);
+        }
+
+        .product-details {
+            flex: 1;
+            min-width: 300px;
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .stock-info {
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .quantity-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger {
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin: 2rem 0 1rem 2rem;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 1rem;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+            opacity: 0.8;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            padding: 1.5rem;
+        }
+
+        .toast {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            max-width: 350px;
+        }
+
+        .toast-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+        }
+
+        .toast-body {
+            padding: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 0.75rem 0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .img-box {
+            width: 60px;
+            height: 60px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product-image-container {
+                max-width: 100%;
+            }
+
+            .product-details {
+                text-align: center;
+            }
+
+            .quantity-controls {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+  <h1 class="brand-title text-center">VEG-PLAZA</h1>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{url_for('home')}}">
+                            <i class="fas fa-home me-1"></i> HOME
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('cart') }}">
+                            <i class="fas fa-shopping-cart me-1"></i> CART
+                        </a>
+                    </li>
+                    {% if not current_user.is_authenticated: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">
+                            <i class="fas fa-sign-in-alt me-1"></i> LOGIN
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('signup') }}">
+                            <i class="fas fa-user-plus me-1"></i> SIGN UP
+                        </a>
+                    </li>
+                    {% else: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="fas fa-sign-out-alt me-1"></i> LOG OUT
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Detail Section -->
+    <div class="container">
+        <div class="product-container">
+            <div class="product-image-container">
+                <img src="{{vegi.image}}" class="product-image" alt="{{vegi.vegi}}">
+            </div>
+            <div class="product-details">
+                <h1 class="product-title">{{vegi.vegi}}</h1>
+                <h2 class="product-price">₹{{vegi.price}} / kilo</h2>
+                <p class="stock-info">Stock left: <span class="badge bg-{{ 'success' if vegi.stock > 10 else 'warning' if vegi.stock > 0 else 'danger' }}">{{vegi.stock}}</span></p>
+
+                <div class="quantity-controls">
+                    {% if vegi.stock > 0 %}
+                    <a href="{{url_for('productAdd',veg_id=vegi.id,page='product')}}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add to Cart
+                    </a>
+                    {% endif %}
+                    <a href="{{url_for('productDel',veg_id=vegi.id,page='product')}}" class="btn btn-danger">
+                        <i class="fas fa-minus"></i> Remove
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shop Section -->
+    <h2 class="section-title">More Products</h2>
+    <section id="shop" class="container">
+        <!-- Carousel -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-4">
+                        {% for v in vegetable %}
+                        {% if v.id < 5 %}
+                        <div class="col">
+                            <a href="{{url_for('product',veg_id=v.id)}}">
+                                <div class="card h-100">
+                                    <img src="{{v.image}}" class="card-img-top" alt="{{v.vegi}}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{v.vegi}}</h5>
+                                        <p class="card-text">₹{{v.price}} / kilo</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% for v in vegetable %}
+                {% if v.id >= 5 %}
+                <div class="carousel-item">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-4">
+                        {% for v in vegetable %}
+                        {% if v.id >= 5 %}
+                        <div class="col">
+                            <a href="{{url_for('product',veg_id=v.id)}}">
+                                <div class="card h-100">
+                                    <img src="{{v.image}}" class="card-img-top" alt="{{v.vegi}}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{v.vegi}}</h5>
+                                        <p class="card-text">₹{{v.price}} / kilo</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Cart Toast -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fas fa-shopping-basket me-2"></i>
+                <strong class="me-auto">Veg Plaza</strong>
+                <small>Your Cart</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {% for v in cart_vegi %}
+                {% if v.amount != 0 %}
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-3 img-box">
+                            <img src="{{v.image}}" class="img-fluid rounded" alt="{{v.vegi}}">
+                        </div>
+                        <div class="col-9">
+                            <h6 class="mb-1">{{v.vegi}}</h6>
+                            <p class="mb-0 small">₹{{v.price}} × {{v.amount}} = ₹{{v.price * v.amount}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <h5 class="mb-0">Total: <span class="text-success">₹{{total}}</span></h5>
+                    <a href="{{ url_for('checkout') }}" class="btn btn-primary">
+                        <i class="fas fa-shopping-cart me-1"></i> Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="../static/assets/js/ToastFix.js"></script>
+
+    {% if show %}
+    <script>
+        window.onload = (event) => {
+            var toastLiveExample = document.getElementById('liveToast');
+            var toast = new bootstrap.Toast(toastLiveExample);
+            toast.show();
+        }
+    </script>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEG-PLAZA - Cart</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./static/assets/css/cart.css">
+</head>
+<body>
+    <!-- Brand Name -->
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <h1 class="brand-name">VEG-PLAZA</h1>
+
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('product', veg_id=1) }}">SHOP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('cart') }}">CART</a>
+                    </li>
+                    {% if not current_user.is_authenticated: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">LOGIN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('signup') }}">SIGN UP</a>
+                    </li>
+                    {% else: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">LOG OUT</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Content -->
+    <div class="container">
+        <div class="cart-container">
+            <!-- Cart Header -->
+            <div class="row cart-header d-none d-md-flex">
+                <div class="col-md-6">
+                    <h6 class="text-muted">PRODUCT</h6>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h6 class="text-muted">PRICE</h6>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h6 class="text-muted">QTY</h6>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h6 class="text-muted">TOTAL</h6>
+                </div>
+            </div>
+
+            {% if show %}
+                {% for v in cart_vegi %}
+                    {% if v.amount > 0 %}
+                    <!-- Cart Item -->
+                    <div class="row cart-item align-items-center">
+                        <div class="col-md-6 d-flex align-items-center">
+                            <img src="{{ v.image }}" alt="{{ v.vegi }}" class="me-3">
+                            <div class="item-details">
+                                <h5>{{ v.vegi }}</h5>
+                                <div class="item-specs">Fresh, Organic</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <div class="price">₹{{ v.price }}</div>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <div class="quantity-control justify-content-center">
+                                <a href="{{ url_for('productDel', veg_id=v.id, page='cart') }}" class="btn btn-quantity">
+                                    <i class="fas fa-minus"></i>
+                                </a>
+                                <span class="quantity">{{ v.amount }}</span>
+                                <a href="{{ url_for('productAdd', veg_id=v.id, page='cart') }}" class="btn btn-quantity">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-1 text-center">
+                            <div class="total">₹{{ v.price * v.amount }}</div>
+                        </div>
+                        <div class="col-md-1 text-end">
+                            <a href="{{ url_for('productDel', veg_id=v.id, page='cart') }}" class="remove-btn">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <!-- Empty Cart -->
+                <div class="empty-cart">
+                    <h3>Your cart is empty</h3>
+                    <a href="{{ url_for('product', veg_id=1) }}" class="btn btn-outline-success">Continue Shopping</a>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if show %}
+        <!-- Cart Footer -->
+        <div class="cart-footer">
+            <div class="row">
+                <div class="col-md-6">
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-end mb-3">
+                        <div class="subtotal me-3">SUBTOTAL:</div>
+                        <div class="subtotal">₹{{ total }}</div>
+                    </div>
+                    <div class="form-check mb-3 text-end">
+                        <input class="form-check-input" type="checkbox" id="terms">
+                    </div>
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{{ url_for('checkout') }}" class="btn checkout-btn">CHECKOUT</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <a href="{{ url_for('product', veg_id=1) }}" class="back-btn">
+                        <i class="fas fa-arrow-left me-2"></i> Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>

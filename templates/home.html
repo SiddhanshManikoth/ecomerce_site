@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEG-PLAZA | Fresh Vegetables Delivered</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="static/assets/css/home.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2E7D32;
+            --accent-color: #8BC34A;
+            --dark-bg: #0b1910;
+            --light-bg: #f8f9fa;
+            --text-color: #333;
+            --light-text: #fff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .brand-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin: 1rem 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-color: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            color: var(--light-text);
+            padding: 4rem 2rem;
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            max-width: 50%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* Section Titles */
+        .section-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-align: center;
+            margin: 3rem 0 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        /* Product Cards */
+        .card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        /* Carousel Controls */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+            opacity: 0.8;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            padding: 1.5rem;
+        }
+
+        /* Toast Notification */
+        .toast {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            max-width: 350px;
+        }
+
+        .toast-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+        }
+
+        .toast-body {
+            padding: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 0.75rem 0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .img-box {
+            width: 60px;
+            height: 60px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            padding: 1.5rem 0;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 0;
+        }
+
+        /* Links */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-image {
+                opacity: 0.4;
+                max-width: 100%;
+                right: -20%;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 500px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .navbar-nav {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <h1 class="brand-title text-center">VEG-PLAZA</h1>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">
+                            <i class="fas fa-home me-1"></i> HOME
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('product', veg_id=1 ) }}">
+                            <i class="fas fa-store me-1"></i> SHOP
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('cart') }}">
+                            <i class="fas fa-shopping-cart me-1"></i> CART
+                        </a>
+                    </li>
+                    {% if not current_user.is_authenticated: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">
+                            <i class="fas fa-sign-in-alt me-1"></i> LOGIN
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('signup') }}">
+                            <i class="fas fa-user-plus me-1"></i> SIGN UP
+                        </a>
+                    </li>
+                    {% else: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="fas fa-sign-out-alt me-1"></i> LOG OUT
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('checkout')}}">
+                            <i class="fas fa-credit-card me-1"></i> CHECKOUT
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Farm-fresh vegetables<br>delivered straight to<br>your doorstep.</h1>
+            <a href="{{ url_for('product', veg_id=1 ) }}" class="btn btn-success btn-lg mt-3">
+                <i class="fas fa-shopping-basket me-2"></i> Shop Now
+            </a>
+        </div>
+        <img src="./static/assets/images/background.png" class="hero-image" alt="Fresh vegetables">
+    </section>
+
+    <!-- Featured Products Section -->
+    <h2 class="section-title">Fresh From Farm</h2>
+    <section id="shop" class="container">
+        <!-- Carousel -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-4">
+                        {% for v in vegetable %}
+                        {% if v.id < 5 %}
+                        <div class="col">
+                            <a href="{{url_for('product',veg_id=v.id)}}">
+                                <div class="card h-100">
+                                    <div class="position-absolute top-0 end-0 m-2">
+                                        <span class="badge bg-success">Fresh</span>
+                                    </div>
+                                    <img src="{{v.image}}" class="card-img-top" alt="{{v.vegi}}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{v.vegi}}</h5>
+                                        <p class="card-text">₹{{v.price}} / kilo</p>
+                                    </div>
+                                    <div class="card-footer bg-transparent border-0 text-end">
+                                        <small class="text-muted">Click to view details</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% for v in vegetable %}
+                {% if v.id >= 5 %}
+                <div class="carousel-item">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-4">
+                        {% for v in vegetable %}
+                        {% if v.id >= 5 %}
+                        <div class="col">
+                            <a href="{{url_for('product',veg_id=v.id)}}">
+                                <div class="card h-100">
+                                    <div class="position-absolute top-0 end-0 m-2">
+                                        <span class="badge bg-success">Fresh</span>
+                                    </div>
+                                    <img src="{{v.image}}" class="card-img-top" alt="{{v.vegi}}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{v.vegi}}</h5>
+                                        <p class="card-text">₹{{v.price}} / kilo</p>
+                                    </div>
+                                    <div class="card-footer bg-transparent border-0 text-end">
+                                        <small class="text-muted">Click to view details</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="container my-5">
+        <h2 class="section-title">Why Choose Us</h2>
+        <div class="row g-4 py-3">
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-3">
+                    <div class="card-body">
+                        <i class="fas fa-truck text-success mb-3" style="font-size: 2.5rem;"></i>
+                        <h4 class="card-title">Fast Delivery</h4>
+                        <p class="card-text">We deliver fresh vegetables to your doorstep within hours of harvesting.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-3">
+                    <div class="card-body">
+                        <i class="fas fa-leaf text-success mb-3" style="font-size: 2.5rem;"></i>
+                        <h4 class="card-title">100% Organic</h4>
+                        <p class="card-text">All our vegetables are grown organically without harmful pesticides.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-3">
+                    <div class="card-body">
+                        <i class="fas fa-hand-holding-usd text-success mb-3" style="font-size: 2.5rem;"></i>
+                        <h4 class="card-title">Best Prices</h4>
+                        <p class="card-text">Get farm-fresh vegetables at the best prices with no middlemen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Toast -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fas fa-shopping-basket me-2"></i>
+                <strong class="me-auto">Veg Plaza</strong>
+                <small>In your cart</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {% for v in cart_vegi %}
+                {% if v.amount > 0 %}
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-3 img-box">
+                            <img src="{{v.image}}" class="img-fluid rounded" alt="{{v.vegi}}">
+                        </div>
+                        <div class="col-9">
+                            <h6 class="mb-1">{{v.vegi}}</h6>
+                            <p class="mb-0 small">₹{{v.price}} × {{v.amount}} = ₹{{v.price * v.amount}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <h5 class="mb-0">Total: <span class="text-success">₹{{total}}</span></h5>
+                    <a href="{{ url_for('checkout') }}" class="btn btn-primary">
+                        <i class="fas fa-shopping-cart me-1"></i> Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>© 2025 Siddhansh Manikoth. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        // Initialize toast if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+            var toastList = toastElList.map(function(toastEl) {
+                return new bootstrap.Toast(toastEl)
+            })
+        });
+    </script>
+</body>
+</html>

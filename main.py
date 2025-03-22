@@ -400,7 +400,7 @@ def productDel(veg_id,page):
 
 
 
-
+@app.route("/add", methods=["GET", "POST"])
 def add():
     form = add_form()
     if form.validate_on_submit():
